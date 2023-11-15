@@ -1,10 +1,12 @@
 "use client"
 
-import Toast from "@/components/Toast"
-import axios from "axios"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
-import { useState } from "react"
+import axios from "axios";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css'
 
 export default function Home() {
   const router = useRouter()
@@ -12,61 +14,60 @@ export default function Home() {
     email: "",
     password: ""
   })
-  const [loading, setLoading] = useState(false)
-  const [toast, setToast] = useState({
-    vis: false,
-    message: ""
-  })
 
-  const onLogin = async () => {
+  const login = async () => {
     try {
-      setLoading(true)
-      const response = await axios.post("/api/users/login", user);
-      router.push('/profile')
+      await axios.post(`/api/users/login`, user)
+      router.push('/dashboard')
     } catch (error: any) {
-      console.log("Login failed:", error.response.data.error)
-      setToast({
-        vis: true,
-        message: error.response.data.error
-      })
-    } finally {
-      setLoading(false)
+      if (error.response) {
+        toast.error(error.response.data)
+      } else if (error.request) {
+        console.log(error.request);
+        toast.error(error.request)
+      } else {
+        console.log('Error', error.message);
+        toast.error(`Error ${error.message}`)
+      }
     }
   }
 
   return (
-    <div className="hero min-h-screen bg-base-200">
-      <div className="hero-content flex-col">
-        <div className="text-center lg:text-left mb-5">
-          <h1 className="text-7xl font-light">Login here</h1>
-        </div>
-        <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-          <div className="card-body">
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Email</span>
-              </label>
-              <input type="email" name="email" placeholder="email" className="input input-bordered" value={user.email} onChange={(e) => setUser({ ...user, email: e.target.value })} required />
-            </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Password</span>
-              </label>
-              <input type="password" name="password" placeholder="password" className="input input-bordered" onChange={(e) => setUser({ ...user, password: e.target.value })} required />
-              <label className="label">
-                <Link href="/forgot" className="label-text-alt link link-hover">Forgot password?</Link>
-              </label>
-            </div>
-            <div className="form-control mt-6 items-center">
-              <button className="btn btn-accent min-w-full" onClick={onLogin}>{loading && <span className="loading loading-spinner loading-xs"></span>} Login</button>
-              <Link href="/signup" className="label-text-alt link link-hover mt-2">Create an account</Link>
-            </div>
-          </div>
-        </div>
+    <div className="min-h-screen flex flex-col bg-base-300 justify-center items-center">
+      <div className="text-center text-7xl font-light mb-5">
+        Login here
       </div>
 
-      {/* Toast Alert */}
-      {toast.vis && <Toast msg={toast.message} />}
+      <div className="card bg-base-100 w-full max-w-sm shadow-2xl">
+        <div className="card-body">
+
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Email</span>
+            </label>
+            <input type="email" placeholder="mymail@gmail.com" className="input input-bordered" value={user.email} onChange={(e) => setUser({ email: e.target.value, password: user.password })} />
+          </div>
+
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Password</span>
+            </label>
+            <input type="password" placeholder="Your password" className="input input-bordered" value={user.password} onChange={(e) => setUser({ email: user.email, password: e.target.value })} />
+            <label className="label">
+              <Link href="/forgot" className="label-text-alt link link-hover text-error">Forgot password?</Link>
+            </label>
+          </div>
+
+          <div className="form-control items-center">
+            <button onClick={login} className="btn btn-primary min-w-full mb-2">Login</button>
+            <Link href="/signup" className="label-text-alt link link-hover text-secondary">Create a new account</Link>
+          </div>
+
+        </div>
+      </div>
+      <ToastContainer
+        theme="dark"
+      />
     </div>
   )
 }

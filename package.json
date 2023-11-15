@@ -18,9 +18,11 @@
     "mapmyindia-react": "^1.0.6",
     "mappls-web-maps": "^3.0.4",
     "next": "14.0.1",
+    "next-client-cookies": "^1.0.6",
     "prisma": "^5.5.2",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-toastify": "^9.1.3"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",

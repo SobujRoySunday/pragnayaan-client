@@ -2,7 +2,6 @@
 import axios from "axios";
 import { useState } from "react"
 import { useRouter } from "next/navigation";
-import Toast from "@/components/Toast";
 import Link from "next/link";
 
 export default function Signup() {
@@ -36,7 +35,6 @@ export default function Signup() {
 
   return (
     <div className="hero min-h-screen bg-base-200">
-      {toast.vis && <Toast msg={toast.message} />}
       <div className="hero-content flex-col lg:flex-row-reverse">
         <div className="text-center lg:text-left mb-5">
           <h1 className="text-7xl font-light">Create a new account</h1>

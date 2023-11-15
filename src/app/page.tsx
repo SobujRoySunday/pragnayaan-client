@@ -5,8 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-import { ToastContainer, toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css'
+import { toast } from "react-toastify";
 
 export default function Home() {
   const router = useRouter()
@@ -65,9 +64,6 @@ export default function Home() {
 
         </div>
       </div>
-      <ToastContainer
-        theme="dark"
-      />
     </div>
   )
 }

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import ToastProvider from '@/providers/ToastProvider'
 
 export const metadata: Metadata = {
   title: 'Pragnayaan',
@@ -14,7 +15,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        {children}
+        <ToastProvider>
+          {children}
+        </ToastProvider>
       </body>
       <script src={`https://apis.mappls.com/advancedmaps/api/${process.env.MAP_API_KEY}/map_sdk?v=3.0&layer=vector`} async />
     </html>

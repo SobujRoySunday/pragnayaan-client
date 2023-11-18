@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/db/prisma"
+import { sendEmail } from "@/utils/mailer"
 import bcryptjs from "bcryptjs"
 import { NextRequest, NextResponse } from "next/server"
 
@@ -60,6 +61,9 @@ export async function POST(request: NextRequest) {
     })
 
     if (createdUser) {
+      // send verification email
+      await sendEmail({ email, emailType: 'VERIFY', userId: createdUser.id })
+
       return NextResponse.json({
         message: "User created successfully",
         success: true,

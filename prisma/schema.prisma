@@ -17,7 +17,7 @@ model users {
   isCreated                 DateTime @default(now())
   isUpdated                 DateTime @updatedAt
   forgotPasswordToken       String   @default("")
-  forgotPasswordTokenExpiry String   @default("")
+  forgotPasswordTokenExpiry Int      @default(0)
   verifyToken               String   @default("")
-  verifyTokenExpiry         String   @default("")
+  verifyTokenExpiry         Int      @default(0)
 }

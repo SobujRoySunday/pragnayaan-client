@@ -3,6 +3,7 @@
 import axios from "axios"
 import Link from "next/link"
 import { useEffect, useState } from "react"
+import { toast } from "react-toastify"
 
 export default function VerifyEmailPage() {
   const [token, setToken] = useState("")
@@ -14,8 +15,15 @@ export default function VerifyEmailPage() {
       await axios.post('/api/users/verifyemail', { token })
       setVerified(true)
     } catch (error: any) {
-      setError(true)
-      console.log(error.response.data)
+      if (error.response) {
+        toast.error(error.response.data)
+      } else if (error.request) {
+        console.log(error.request);
+        toast.error(error.request)
+      } else {
+        console.log('Error', error.message);
+        toast.error(`Error ${error.message}`)
+      }
     }
   }
 
@@ -31,7 +39,7 @@ export default function VerifyEmailPage() {
   }, [token])
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
+    <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-base-300">
       <h1 className="text-4xl">Verify Email</h1>
       <h2 className="p-2 text-primary ">{token ? `${token}` : "No token"}</h2>
 

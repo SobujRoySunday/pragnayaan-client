@@ -1,14 +1,32 @@
 "use client"
 
+import axios from "axios";
 import Link from "next/link";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 export default function Forgot() {
   const [email, setEmail] = useState("")
   const [loading, setLoading] = useState(false)
 
   const forgot = async () => {
-
+    try {
+      setLoading(true)
+      await axios.post('/api/users/forgot', { email })
+      toast.success('Password reset link has been sent to your email')
+    } catch (error: any) {
+      if (error.response) {
+        toast.error(error.response.data)
+      } else if (error.request) {
+        console.log(error.request);
+        toast.error(error.request)
+      } else {
+        console.log('Error', error.message);
+        toast.error(`Error ${error.message}`)
+      }
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (

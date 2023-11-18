@@ -71,7 +71,7 @@ export const sendEmail = async ({ email, emailType, userId }: any) => {
         <h2>${emailType === 'VERIFY' ? 'Verify your email' : 'Reset your password'}</h2>
         <p>Hello ${email},</p>
         <p>Click the button below to ${emailType === 'VERIFY' ? 'verify your email' : 'reset your password'}:</p>
-        <a class="btn" href="${process.env.DOMAIN}/verifyemail?token=${hashedToken}">${emailType === 'VERIFY' ? 'Verify' : 'Reset password'}</a>
+        <a class="btn" href="${process.env.DOMAIN}/${emailType === 'VERIFY' ? 'verifyemail' : 'resetpassword'}?token=${hashedToken}">${emailType === 'VERIFY' ? 'Verify' : 'Reset password'}</a>
         <p>If you didn't request this, please ignore this email.</p>
         <p>Thanks,<br>Pragnayaan Team</p>
       </div>`

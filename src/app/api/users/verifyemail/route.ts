@@ -5,7 +5,6 @@ export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json()
     const { token } = reqBody
-    console.log(token)
 
     const user = await prisma.users.findFirst({
       where: {
@@ -15,10 +14,8 @@ export async function POST(request: NextRequest) {
     })
 
     if (!user) {
-      return NextResponse.json({ error: 'Invalid token' }, { status: 400 })
+      return NextResponse.json('Invalid token', { status: 400 })
     }
-
-    console.log(user)
 
     await prisma.users.update({
       where: {

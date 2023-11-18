@@ -15,11 +15,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ToastProvider>
-          {children}
-        </ToastProvider>
+        <ToastProvider />
+        {children}
       </body>
-      <script src={`https://apis.mappls.com/advancedmaps/api/${process.env.MAP_API_KEY}/map_sdk?v=3.0&layer=vector`} async />
     </html>
   )
 }

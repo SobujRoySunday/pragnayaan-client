@@ -13,9 +13,11 @@ export default function Home() {
     email: "",
     password: ""
   })
+  const [loading, setLoading] = useState(false)
 
   const login = async () => {
     try {
+      setLoading(true)
       await axios.post(`/api/users/login`, user)
       router.push('/dashboard')
     } catch (error: any) {
@@ -28,6 +30,8 @@ export default function Home() {
         console.log('Error', error.message);
         toast.error(`Error ${error.message}`)
       }
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -58,7 +62,12 @@ export default function Home() {
           </div>
 
           <div className="form-control items-center">
-            <button onClick={login} className="btn btn-primary min-w-full mb-2">Login</button>
+            <button onClick={login} className="btn btn-primary min-w-full mb-2">
+              {
+                loading && <span className="loading loading-spinner loading-sm"></span>
+              }
+              Login
+            </button>
             <Link href="/signup" className="label-text-alt link link-hover text-secondary">Create a new account</Link>
           </div>
 

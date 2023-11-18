@@ -1,10 +1,11 @@
 "use client"
-import LogoutButton from "@/components/LogoutButton"
+
 import axios from "axios"
+import Link from "next/link"
 import { useEffect, useState } from "react"
 
 export default function Profile() {
-  const [data, setData] = useState({
+  const [user, setUser] = useState({
     name: "",
     email: "",
     role: "",
@@ -12,24 +13,20 @@ export default function Profile() {
 
   const getUserDetails = async () => {
     const res = await axios.get('/api/users/self')
-    setData(res.data.data)
+    setUser(res.data.data)
   }
 
   useEffect(() => {
     getUserDetails()
   })
   return (
-    <div>
-      <h2>
-        Name: {data.name && <span>{data.name}</span>}
-      </h2>
-      <h2>
-        Email: {data.email && <span>{data.email}</span>}
-      </h2>
-      <h2>
-        Role: {data.role && <span>{data.role}</span>}
-      </h2>
-      <LogoutButton />
+    <div className="flex flex-col justify-center items-center bg-base-200">
+      <div className="p-40">
+        <h1 className="text-7xl">Hello! {user.name}</h1>
+        <div className="flex flex-row justify-center mt-10">
+          <Link href='/dashboard/createAcc' className="btn btn-accent"> Create new account</Link>
+        </div>
+      </div>
     </div>
   )
 }

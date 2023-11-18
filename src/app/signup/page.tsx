@@ -80,7 +80,7 @@ export default function Signup() {
               {
                 loading && <span className="loading loading-spinner loading-sm"></span>
               }
-              Login
+              Create account
             </button>
             <Link href="/" className="label-text-alt link link-hover text-secondary">Already have an account?</Link>
           </div>

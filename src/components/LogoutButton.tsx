@@ -1,30 +1,42 @@
 "use client"
+
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 export default function LogoutButton() {
   const router = useRouter()
-  const [toast, setToast] = useState({
-    vis: false,
-    message: ""
-  })
+  const [loading, setLoading] = useState(false)
+
   const logout = async () => {
     try {
+      setLoading(true)
       await axios.get('/api/users/logout')
       router.push('/')
     } catch (error: any) {
-      console.log("Signup failed:", error.response.data.error)
-      setToast({
-        vis: true,
-        message: error.response.data.error
-      })
+      if (error.response) {
+        toast.error(error.response.data)
+      } else if (error.request) {
+        console.log(error.request);
+        toast.error(error.request)
+      } else {
+        console.log('Error', error.message);
+        toast.error(`Error ${error.message}`)
+      }
+    } finally {
+      setLoading(false)
     }
   }
 
   return (
     <div>
-      <button className="btn btn-error" onClick={logout}>LOGOUT</button>
+      <button className="btn btn-error" onClick={logout}>
+        {
+          loading && <span className="loading loading-spinner loading-sm"></span>
+        }
+        LOGOUT
+      </button>
     </div>
   )
 }

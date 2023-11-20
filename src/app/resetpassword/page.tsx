@@ -19,6 +19,7 @@ export default function ResetPasswordPage() {
       await axios.post('/api/users/resetpassword', { token, password, rePassword })
       setReset(true)
     } catch (error: any) {
+      setError(true)
       if (error.response) {
         toast.error(error.response.data)
       } else if (error.request) {

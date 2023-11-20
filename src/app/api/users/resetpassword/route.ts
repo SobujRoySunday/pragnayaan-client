@@ -7,29 +7,29 @@ export async function POST(request: NextRequest) {
     const reqBody = await request.json()
     const { token, password, rePassword } = reqBody
 
+    // checking if the token is valid
     const user = await prisma.users.findFirst({
       where: {
         forgotPasswordToken: token,
         forgotPasswordTokenExpiry: { gt: Date.now() }
       }
     })
-
     if (!user) {
       return NextResponse.json('Invalid token', { status: 400 })
     }
 
+    // checking if fields are not empty
     if (password.length === 0) {
       return NextResponse.json('Password cannot be empty', { status: 400 })
     }
-
     if (rePassword.length === 0) {
       return NextResponse.json('Please retype your password', { status: 400 })
     }
 
+    // checking password requirements
     if (password.length < 8) {
       return NextResponse.json('Minimum length of password should be 8', { status: 400 })
     }
-
     if (password !== rePassword) {
       return NextResponse.json('Passwords are not matching', { status: 400 })
     }

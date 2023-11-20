@@ -14,7 +14,6 @@ export default function Signup() {
     email: "",
     password: "",
     rePassword: "",
-    role: "client"
   });
   const [loading, setLoading] = useState(false);
 

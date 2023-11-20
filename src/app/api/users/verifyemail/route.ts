@@ -6,17 +6,18 @@ export async function POST(request: NextRequest) {
     const reqBody = await request.json()
     const { token } = reqBody
 
+    // checking if the token is valid
     const user = await prisma.users.findFirst({
       where: {
         verifyToken: token,
         verifyTokenExpiry: { gt: Date.now() }
       }
     })
-
     if (!user) {
       return NextResponse.json('Invalid token', { status: 400 })
     }
 
+    // verifying the user
     await prisma.users.update({
       where: {
         id: user.id

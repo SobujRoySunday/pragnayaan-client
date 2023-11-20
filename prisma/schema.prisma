@@ -7,17 +7,28 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model users {
-  id                        String   @id @default(auto()) @map("_id") @db.ObjectId
-  email                     String   @unique
-  isVerified                Boolean  @default(false)
-  name                      String
-  password                  String
-  role                      String   @default("std")
-  isCreated                 DateTime @default(now())
-  isUpdated                 DateTime @updatedAt
-  forgotPasswordToken       String   @default("")
-  forgotPasswordTokenExpiry Int      @default(0)
-  verifyToken               String   @default("")
-  verifyTokenExpiry         Int      @default(0)
+enum UserRoles {
+  DEV
+  ADMIN
+  DRIVER
+  CLIENT
+}
+
+model Users {
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  email    String    @unique
+  password String
+  role     UserRoles @default(CLIENT)
+
+  isVerified  Boolean  @default(false)
+  isCreatedAt DateTime @default(now())
+  isUpdatedAt DateTime @updatedAt
+
+  forgotPasswordToken       String @default("")
+  verifyToken               String @default("")
+  forgotPasswordTokenExpiry Int    @default(0)
+  verifyTokenExpiry         Int    @default(0)
+
+  @@map("users")
 }

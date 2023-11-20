@@ -9,6 +9,14 @@ export async function POST(request: NextRequest) {
     const reqBody = await request.json()
     const { email, password } = reqBody
 
+    // checking if fields are not empty
+    if (email.length === 0) {
+      return NextResponse.json(`Please enter your email id`, { status: 400 })
+    }
+    if (password.length === 0) {
+      return NextResponse.json(`Please enter your password`, { status: 400 })
+    }
+
     // Checking if the user exists
     const user = await prisma.users.findUnique({
       where: {
@@ -28,7 +36,7 @@ export async function POST(request: NextRequest) {
     // create token
     const tokenData = {
       id: user.id,
-      email: user.email
+      role: user.role
     }
     const token = await jwt.sign(tokenData, process.env.TOKEN_SECRET_KEY!, { expiresIn: "1d" })
 

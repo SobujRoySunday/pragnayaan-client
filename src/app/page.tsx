@@ -19,7 +19,7 @@ export default function Home() {
     try {
       setLoading(true)
       await axios.post(`/api/users/login`, user)
-      router.push('/dashboard')
+      router.push('/')
     } catch (error: any) {
       if (error.response) {
         toast.error(error.response.data)

@@ -1,5 +1,6 @@
 "use client"
 
+import LogoutButton from "@/components/LogoutButton"
 import axios from "axios"
 import Image from "next/image"
 import Link from "next/link"
@@ -59,19 +60,19 @@ export default function Sidebar() {
         <section className="flex flex-col items-start gap-4 w-full">
           <label className="text-sm text-info">User Management</label>
           <div className={`pl-4 text-sm ${urlState === 'adminlist' && 'text-secondary'}`}>
-            <Link className="flex flex-row justify-center gap-3" href='/dashboard/dev/' onClick={() => { setUrlSet('adminlist') }}>
+            <Link className="flex flex-row justify-center gap-3" href='/dashboard/dev/adminlist' onClick={() => { setUrlSet('adminlist') }}>
               <Image className="invert w-4 h-4" src='/images/security.png' alt="dashboard icon" width={50} height={50} />
               Admin list
             </Link>
           </div>
           <div className={`pl-4 text-sm ${urlState === 'driverlist' && 'text-secondary'}`}>
-            <Link className="flex flex-row justify-center gap-3" href='/dashboard/dev/' onClick={() => { setUrlSet('driverlist') }}>
+            <Link className="flex flex-row justify-center gap-3" href='/dashboard/dev/driverlist' onClick={() => { setUrlSet('driverlist') }}>
               <Image className="invert w-4 h-4" src='/images/driver.png' alt="dashboard icon" width={50} height={50} />
               Driver list
             </Link>
           </div>
           <div className={`pl-4 text-sm ${urlState === 'adduser' && 'text-secondary'}`}>
-            <Link className="flex flex-row gap-3" href='/dashboard/dev/' onClick={() => { setUrlSet('adduser') }}>
+            <Link className="flex flex-row gap-3" href='/dashboard/dev/adduser' onClick={() => { setUrlSet('adduser') }}>
               <Image className="invert w-4 h-4" src='/images/new-account.png' alt="dashboard icon" width={50} height={50} />
               Add new user
             </Link>
@@ -80,19 +81,19 @@ export default function Sidebar() {
         <section className="flex flex-col items-start gap-4 w-full">
           <label className="text-sm text-info">Business</label>
           <div className={`pl-4 text-sm ${urlState === 'newbus' && 'text-secondary'}`}>
-            <Link className="flex flex-row justify-center gap-3" href='/dashboard/dev/' onClick={() => { setUrlSet('newbus') }}>
+            <Link className="flex flex-row justify-center gap-3" href='/dashboard/dev/newbus' onClick={() => { setUrlSet('newbus') }}>
               <Image className="invert w-4 h-4" src='/images/bus.png' alt="dashboard icon" width={50} height={50} />
               Create new bus
             </Link>
           </div>
           <div className={`pl-4 text-sm ${urlState === 'addbus' && 'text-secondary'}`}>
-            <Link className="flex flex-row justify-center gap-3" href='/dashboard/dev/' onClick={() => { setUrlSet('addbus') }}>
+            <Link className="flex flex-row justify-center gap-3" href='/dashboard/dev/addbus' onClick={() => { setUrlSet('addbus') }}>
               <Image className="invert w-4 h-4" src='/images/new-page.png' alt="dashboard icon" width={50} height={50} />
               Add new bus
             </Link>
           </div>
           <div className={`pl-4 text-sm ${urlState === 'faq' && 'text-secondary'}`}>
-            <Link className="flex flex-row gap-3" href='/dashboard/dev/' onClick={() => { setUrlSet('faq') }}>
+            <Link className="flex flex-row gap-3" href='/dashboard/dev/faq' onClick={() => { setUrlSet('faq') }}>
               <Image className="invert w-4 h-4" src='/images/faq.png' alt="dashboard icon" width={50} height={50} />
               FAQ
             </Link>
@@ -101,7 +102,7 @@ export default function Sidebar() {
       </div>
 
       <div className="flex flex-col justify-center items-start mb-10">
-        <Link href='' className="btn btn-warning btn-sm w-full">Logout</Link>
+        <LogoutButton />
       </div>
     </div>
   )

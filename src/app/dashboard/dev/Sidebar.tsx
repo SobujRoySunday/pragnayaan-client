@@ -33,7 +33,7 @@ export default function Sidebar() {
     setUserData()
   }, [])
   return (
-    <div className="py-1 px-8 min-h-screen bg-base-200">
+    <div className="py-1 px-8 h-screen bg-base-200">
       {/* Profile */}
       <div className="flex flex-col justify-center items-center my-10">
         <div className="avatar">

@@ -14,6 +14,7 @@ export async function POST(request: NextRequest) {
       }
     })
     if (!user) {
+      console.log(user)
       return NextResponse.json('Invalid token', { status: 400 })
     }
 

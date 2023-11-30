@@ -25,10 +25,31 @@ model Users {
   isCreatedAt DateTime @default(now())
   isUpdatedAt DateTime @updatedAt
 
+  assignedBuses Buses[]
+
   forgotPasswordToken       String @default("")
   verifyToken               String @default("")
   forgotPasswordTokenExpiry Int    @default(0)
   verifyTokenExpiry         Int    @default(0)
 
   @@map("users")
+}
+
+model BusTypes {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  typeName String  @unique
+  Buses    Buses[]
+
+  @@map("busTypes")
+}
+
+model Buses {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  busNumber  String   @unique
+  busType    BusTypes @relation(fields: [busTypesId], references: [id])
+  busTypesId String   @db.ObjectId
+  Users      Users?   @relation(fields: [usersId], references: [id])
+  usersId    String?  @db.ObjectId
+
+  @@map("buses")
 }
